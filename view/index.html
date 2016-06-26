@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Node test</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./publick/css/style.css">
+	<script src="./publick/js/angular.js" ></script>
+	<script src="./publick/js/controllers/index-controller.js" ></script>
+</head>
+<body>
+	<div ng-app="nodeTest">
+		<div ng-controller="indexController" ng-cloak>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						
+					</div>
+					<div class="col-md-4">
+						<p>Создать новый файл</p>
+						<input type="text" ng-model="newFileName" ng-change="chengeNewFileName()">
+						<button ng-click="createNewFile()" ng-disabled="disabledCreateNewFile">Создать</button>
+					</div>
+					<div class="col-md-4">
+						<p class="currentStatus">{{status}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<textarea ng-model="textTofile" ng-change="changeTextTofile()" name="textTofile" id="textTofile" cols="30" rows="10"></textarea>
+						<button ng-click="uppdateFile()" >Отправить</button>
+					</div>
+					<div class="col-md-4">{{fileContent}}</div>
+					<div class="col-md-4">
+						<ul class="listAllFiles" >
+							<li ng-repeat="file in files" > <span ng-class="file.selected ? 'active':'' " ng-click="chooseFile(file)">{{file.name}}</span>  <span ng-click="removeFile($index)" >X</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
