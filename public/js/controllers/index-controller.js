@@ -4,6 +4,9 @@ angular.module('nodeTest', []).controller('indexController', ['$scope', '$http',
     	scope.files = []; // массив объектов со свойствами файла
     	scope.disabledUppdateFile = true; // блокировка кнопки отправки обновления файла
     	scope.disabledCreateNewFile = true; // блокировка кнопки создания нового файла
+        scope.textTofile = "";
+        scope.newFileName = "";
+        var selectedFile = undefined;
     	var testStatuses = { // статусы 
     		duplicate: "Файл с таким именем уже существует",
     		chooseFile: "Выберете файл для редактирования",
@@ -13,14 +16,14 @@ angular.module('nodeTest', []).controller('indexController', ['$scope', '$http',
     		error: "Произошла ошибка"
     	}
 
-    	// вызываеться при изменении в textarea
-    	scope.changeTextTofile = function(){ 
-    		if(scope.textTofile == ""){
-    			scope.disabledUppdateFile = true;
-    		}else{
-    			scope.disabledUppdateFile = false;
-    		}
-    	};
+        // вызываеться при изменении в textarea
+        scope.checkdisabledUpdateFile = function(){
+            if(selectedFile && scope.textTofile.trim() !== ""){
+                scope.disabledUppdateFile = false;
+            }else{
+                scope.disabledUppdateFile = true;
+            }
+        };
 
     	// проверяет наличие ренее созданых файлов и выводит их название
     	http.post('./jobwithfiles/getfilesnameindir').then(
@@ -62,8 +65,8 @@ angular.module('nodeTest', []).controller('indexController', ['$scope', '$http',
     	}
     	
     	// срабатывает при изменении в поле ввода имени нового файла
-    	scope.chengeNewFileName = function(){
-    		if(scope.newFileName == ""){
+    	scope.changeNewFileName = function(){
+    		if(scope.newFileName.trim() == ""){
     			scope.disabledCreateNewFile = true;
     		}else{
     			scope.disabledCreateNewFile = false; 
@@ -71,42 +74,45 @@ angular.module('nodeTest', []).controller('indexController', ['$scope', '$http',
     	};
 
     	// срабатывает при выборе файла
-    	scope.chooseFile = function(file){
-    		if(file.selected){
-    			file.selected = false;
-    			scope.status = testStatuses.chooseFile;
-    			scope.disabledUppdateFile = true;
-    		}else{
-    			for(var i = 0; scope.files.length > i; i++){
-    				scope.files[i].selected = false;
-    			}
-    			scope.status = testStatuses.selectFile+file.name;
-    			file.selected = true;
-    			scope.disabledUppdateFile = false;
-    		}
+        scope.chooseFile = function(file){
+            if(selectedFile){
+                if(file.selected){
+                    file.selected = false;
+                    selectedFile = undefined;
+                }else{
+                    selectedFile.selected = false;
+                    selectedFile = file;
+                    selectedFile.selected = true;
+                }
+            }else{
+                selectedFile = file;
+                selectedFile.selected = true;
+            }
+
+            scope.checkdisabledUpdateFile();
     	}
 
 
-
-
     	// удаление файла
-    	scope.removeFile = function($index){
-    		for(var i = 0; scope.files.length > i; i++){
-    			if(scope.files[i].selected) break;
-    		}
-    		http.post('./jobwithfiles/remove', {'fileName': scope.files[$index].name}).then(
+    	scope.removeFile = function(file){
+    		http.post('./jobwithfiles/remove', {'fileName': file.name}).then(
     		function (res){
     			if(res.status == 200){
-    				if(scope.files[$index].selected){
-    					scope.disabledUppdateFile = true;
+    				if(file.selected){
+                        selectedFile = undefined;
     					scope.status = testStatuses.chooseFile;
     				}
-    				scope.files.splice($index, 1);
+                    for(var i = 0; scope.files.length > i; i++){
+                        if(scope.files[i] == file){
+                            scope.files.splice(i, 1);
+                            break;
+                        }
+                    }
+                    scope.checkdisabledUpdateFile();
     			}else{
     				scope.status = testStatuses.error;
     			}
     			if(scope.files.length == 0){
-    				scope.disabledUppdateFile = true;
     				scope.status = testStatuses.fileNotExist;;
     			}
             }, error);
@@ -145,6 +151,4 @@ angular.module('nodeTest', []).controller('indexController', ['$scope', '$http',
     	function error(){
     		scope.status = testStatuses.error;
     	}
-
-
     }]);

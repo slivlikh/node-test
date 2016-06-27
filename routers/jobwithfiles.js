@@ -16,7 +16,7 @@ module.exports = function(req, res, uriArr){
 			res.end("Bad request");
 		} 
 		switch(uriArr[2]){
-			case 'create-file': file.create( './publick/txt/'+body.fileName+'.txt', function(err){
+			case 'create-file': file.create( './public/txt/'+body.fileName+'.txt', function(err){
 				if(err){
 					res.statusCode = 400;
 					res.end("Bad request");
@@ -25,12 +25,12 @@ module.exports = function(req, res, uriArr){
 				res.end(JSON.stringify({name: body.fileName+'.txt'}));
 			}); break; 
 
-			case "uppdate": file.read('./publick/txt/'+body.fileName, res, function(err, data){
+			case "uppdate": file.read('./public/txt/'+body.fileName, res, function(err, data){
 				if(err){
 					res.statusCode = 400;
 					res.end("Bad request");
 				}
-				file.uppdate('./publick/txt/'+body.fileName, body.data, function(err){
+				file.uppdate('./public/txt/'+body.fileName, body.data, function(err){
 					if(err){
 						res.statusCode = 400;
 						res.end("Bad request");
@@ -40,7 +40,7 @@ module.exports = function(req, res, uriArr){
 				res.end(data);
 			} ); break;
 
-			case "getfilesnameindir": file.getfilesnameindir('/publick/txt/', function(err, data){
+			case "getfilesnameindir": file.getfilesnameindir('/public/txt/', function(err, data){
 				if(err){
 					res.statusCode = 400;
 					res.end("Bad request");
@@ -49,7 +49,7 @@ module.exports = function(req, res, uriArr){
 				res.end(JSON.stringify(data));
 			}); break;
 
-			case "remove": file.remove('./publick/txt/'+body.fileName,  function(err){
+			case "remove": file.remove('./public/txt/'+body.fileName,  function(err){
 				if(err){
 					res.statusCode = 400;
 					res.end("Bad request");

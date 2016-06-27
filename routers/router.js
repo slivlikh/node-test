@@ -11,7 +11,7 @@ module.exports = function(req, res){
 		sendFile('./view/index.html', res);
 	}else{
 		switch(uriArr[1]){
-			case 'publick' : sendFile(uri, res); break;
+			case 'public' : sendFile(uri, res); break;
 			case 'jobwithfiles' : jobwithfiles(req, res, uriArr); break;
 			default: res.writeHead(404, {'Content-type': 'text/html'}); res.end('<h1>Not Found</h1>');
 		}
