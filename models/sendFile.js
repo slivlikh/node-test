@@ -20,7 +20,8 @@ module.exports = function(uri, res, callback){
 				return;
 		 	}
 		 	if(stats.isFile()){
-				var mimeType = mimeTypes[path.extname(filename).split('.').reverse()[0]];
+		 		var expansion = path.extname(filename).split('.').reverse()[0];
+				var mimeType = (expansion in mimeTypes) ? mimeTypes[expansion]:"text/plain";
 				var fileStream = new fs.ReadStream(filename);
 				res.writeHead(200, {'Content-type': mimeType});
 				fileStream.pipe(res);
