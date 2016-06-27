@@ -55,6 +55,8 @@ module.exports = function(req, res, uriArr){
 				res.statusCode = 200;
 				res.end('OK');
 			} ); break;
+
+			default: res.writeHead(404, {'Content-type': 'text/html'}); res.end('Not Found');
 		}
 	});
 };

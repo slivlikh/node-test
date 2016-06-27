@@ -14,28 +14,23 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-4">
-						
+						<p>Введите текст для отправки</p>
+						<textarea ng-model="textTofile" ng-change="changeTextTofile()" name="textTofile" class="textTofile" id="textTofile" cols="30" rows="10"></textarea>
+						<button ng-click="uppdateFile()" class="btn btn-success btn-lg" >Отправить</button>
 					</div>
 					<div class="col-md-4">
 						<p>Создать новый файл</p>
 						<input type="text" ng-model="newFileName" ng-change="chengeNewFileName()">
 						<button ng-click="createNewFile()" ng-disabled="disabledCreateNewFile">Создать</button>
+						<br>
+						<p>
+							{{fileContent}}
+						</p>
 					</div>
 					<div class="col-md-4">
 						<p class="currentStatus">{{status}}</p>
-					</div>
-				</div>
-			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-4">
-						<textarea ng-model="textTofile" ng-change="changeTextTofile()" name="textTofile" id="textTofile" cols="30" rows="10"></textarea>
-						<button ng-click="uppdateFile()" >Отправить</button>
-					</div>
-					<div class="col-md-4">{{fileContent}}</div>
-					<div class="col-md-4">
 						<ul class="listAllFiles" >
-							<li ng-repeat="file in files" > <span ng-class="file.selected ? 'active':'' " ng-click="chooseFile(file)">{{file.name}}</span>  <span ng-click="removeFile($index)" >X</span></li>
+							<li ng-repeat="file in files" > <span ng-class="file.selected ? 'active':'' " ng-click="chooseFile(file)" class="file-name">{{file.name}}</span>  <span ng-click="removeFile($index)" class="removefile" >X</span></li>
 						</ul>
 					</div>
 				</div>
