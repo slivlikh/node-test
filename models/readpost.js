@@ -1,5 +1,4 @@
-var qs = require('querystring');
-
+// модуль обработки POST запроса
 module.exports = function(req, res, callback){
 	var body = "";
 	req

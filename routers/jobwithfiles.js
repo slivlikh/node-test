@@ -1,3 +1,5 @@
+// роутер для работы с файлами
+
 var fs = require('fs');
 var path = require('path');
 var readPost = require('../models/readpost.js')

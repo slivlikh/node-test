@@ -1,3 +1,5 @@
+// функции для работы с файлами
+
 var fs = require('fs');
 var path = require('path');
 var sendFile = require('./sendFile.js');
@@ -20,7 +22,6 @@ file.uppdate = function(path, data, callback){
 }
 
 file.remove = function(path, callback){
-	console.log(path);
 	fs.unlink(path, function(err){
 		if(err) return callback(err);
 		return callback(undefined);

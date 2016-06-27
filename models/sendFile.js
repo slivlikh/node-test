@@ -1,3 +1,4 @@
+// зачитывание от отаравка страники
 var path = require('path');
 var fs = require('fs');
 var mimeTypes = {

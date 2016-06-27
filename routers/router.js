@@ -1,6 +1,8 @@
-var sendFile = require('./models/sendFile.js');
+// главный роутер
+
+var sendFile = require('../models/sendFile.js');
 var path = require('path');
-var jobwithfiles = require('./models/jobwithfiles.js');
+var jobwithfiles = require('./jobwithfiles.js');
 var url = require('url');
 module.exports = function(req, res){
 	var uri = url.parse(req.url).pathname;
