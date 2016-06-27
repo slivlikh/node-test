@@ -10,9 +10,10 @@ angular.module('nodeTest', []).controller('indexController', ['$scope', '$http',
     	var testStatuses = { // статусы 
     		duplicate: "Файл с таким именем уже существует",
     		chooseFile: "Выберете файл для редактирования",
+            createdFile: "Файл успешно создан",
     		fileNotExist: "Файлы для редактирования отсутствуют",
     		inputData: "Введите данные для отправки",
-    		selectFile:  "Выберан файл ",
+    		selectFile:  "Выбран файл ",
     		error: "Произошла ошибка"
     	}
 
@@ -57,6 +58,7 @@ angular.module('nodeTest', []).controller('indexController', ['$scope', '$http',
     					if(res.status == 200){
     						scope.files.push(JSON.parse(JSON.stringify({name:res.data.name})));
     						scope.newFileName = "";
+                            scope.status = testStatuses.createdFile;
     					}else{
     						scope.status = testStatuses.error;
     					}
@@ -79,14 +81,17 @@ angular.module('nodeTest', []).controller('indexController', ['$scope', '$http',
                 if(file.selected){
                     file.selected = false;
                     selectedFile = undefined;
+                    scope.status = testStatuses.chooseFile;
                 }else{
                     selectedFile.selected = false;
                     selectedFile = file;
                     selectedFile.selected = true;
+                    scope.status = testStatuses.selectFile + file.name;
                 }
             }else{
                 selectedFile = file;
                 selectedFile.selected = true;
+                scope.status = testStatuses.selectFile + file.name;
             }
 
             scope.checkdisabledUpdateFile();
