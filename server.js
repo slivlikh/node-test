@@ -6,11 +6,11 @@ app.listen(2000);
 app.static('public');
 app.use('/')
 	.get(function(req, res){
-		sendFile('./view/index.html', res);
+		sendFile('/view/index.html', res);
 	});
 app.use('/jobwithfiles/create-file')
 	.post(function(req, res, body){
-		file.create(__dirname + '/public/txt/'+body.fileName+'.txt', function(err){
+		file.create('/public/txt/'+body.fileName+'.txt', function(err){
 			if(err){
 				res.statusCode = 400;
 				res.end("Bad request");
