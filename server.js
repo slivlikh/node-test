@@ -10,7 +10,7 @@ app.use('/')
 	});
 app.use('/jobwithfiles/create-file')
 	.post(function(req, res, body){
-		file.create( './public/txt/'+body.fileName+'.txt', function(err){
+		file.create(__dirname + '/public/txt/'+body.fileName+'.txt', function(err){
 			if(err){
 				res.statusCode = 400;
 				res.end("Bad request");
