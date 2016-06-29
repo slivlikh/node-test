@@ -28,6 +28,9 @@ app.use('/jobwithfiles/uppdate')
 				res.statusCode = 400;
 				res.end("Bad request");
 			}
+			res.statusCode = 200;
+			res.end(data);
+
 			file.uppdate('/public/txt/'+body.fileName, body.data, function(err){
 				if(err){
 					res.statusCode = 400;

@@ -13,8 +13,7 @@ file.create = function(uri, callback){
 };
 
 file.read = function(uri, res, callback){
-	var filepath = path.join(process.cwd(), unescape(uri));
-	sendFile(filepath, res, callback)
+	sendFile(uri, res, callback)
 };
 file.uppdate = function(uri, data, callback){
 	var filepath = path.join(process.cwd(), unescape(uri));
