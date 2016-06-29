@@ -23,19 +23,19 @@ app.use('/jobwithfiles/create-file')
 
 app.use('/jobwithfiles/uppdate')
 	.post(function(req, res, body){
-		file.read('/public/txt/'+body.fileName, res, function(err, data){
+		file.read('/public/txt/'+body.fileName, res, function(err){
 			if(err){
 				res.statusCode = 400;
 				res.end("Bad request");
 			}
-			res.statusCode = 200;
-			res.end(data);
-
+		
 			file.uppdate('/public/txt/'+body.fileName, body.data, function(err){
 				if(err){
 					res.statusCode = 400;
 					res.end("Bad request");
 				}
+				res.statusCode = 200;
+				res.end();
 			});
 		});
 	});
